@@ -1,0 +1,7 @@
+.cp-input {
+  border-radius: 25px !important;
+  border-bottom: none !important;
+  &::after {
+    display: none !important;
+  }
+}
