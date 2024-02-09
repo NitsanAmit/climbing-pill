@@ -1,13 +1,13 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import ThemeProvider from './theme-provider'
+import type { Metadata } from 'next';
+import './globals.scss';
+import ThemeProvider from './theme-provider';
 import { AppBase } from '@/app/AppBase';
 
 export const metadata: Metadata = {
   title: 'Climbing Pill',
-}
+};
 
-export default function RootLayout({ children, }) {
+export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
@@ -19,5 +19,5 @@ export default function RootLayout({ children, }) {
     </ThemeProvider>
     </body>
     </html>
-  )
+  );
 }

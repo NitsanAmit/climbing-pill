@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import {
@@ -9,32 +9,32 @@ import {
   renderToStyleElements,
 } from '@fluentui/react-components';
 import { BrandVariants, createLightTheme, Theme } from '@fluentui/tokens';
-import { Titillium_Web } from 'next/font/google';
+import { Rubik } from 'next/font/google';
 import { useServerInsertedHTML } from 'next/navigation';
 
-const titilliumWeb = Titillium_Web({
+const rubik = Rubik({
   subsets: ['latin'],
-  weight: ['200', '300', '400', '600', '700', '900'],
-  display: 'swap'
-})
+  weight: ['300', '400', '600', '700', '900'],
+  display: 'swap',
+});
 
 const themePalette: BrandVariants = {
-  10: '#060201',
-  20: '#25110E',
-  30: '#3F1917',
-  40: '#551E1E',
-  50: '#6C2325',
-  60: '#84272D',
-  70: '#B62E3F',
-  80: '#db3553',
-  90: '#db3553',
-  100: '#e04a65',
-  110: '#E95C6B',
-  120: '#F0737F',
-  130: '#ea7f93',
-  140: '#f4bdc7',
-  150: '#f9dbe1',
-  160: '#fef6f7'
+  10: "#060203",
+  20: "#241119",
+  30: "#401729",
+  40: "#561B37",
+  50: "#6D1E44",
+  60: "#852053",
+  70: "#D21F80",
+  80: "#ED1C91",
+  90: "#ED1C91",
+  100: "#ED1C91",
+  110: "#F3499D",
+  120: "#F768A9",
+  130: "#FB82B6",
+  140: "#FE9AC3",
+  150: "#FFB1D0",
+  160: "#FFC8DD",
 };
 
 const lightTheme: Theme = {
@@ -54,8 +54,8 @@ export default function ThemeProvider({ children }) {
       <SSRProvider>
         <FluentProvider theme={{
           ...lightTheme,
-          fontFamilyBase: titilliumWeb.style.fontFamily,
-          fontFamilyMonospace: titilliumWeb.style.fontFamily,
+          fontFamilyBase: rubik.style.fontFamily,
+          fontFamilyMonospace: rubik.style.fontFamily,
           palette: themePalette,
 
         }}>

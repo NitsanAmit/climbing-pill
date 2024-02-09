@@ -1,0 +1,33 @@
+import {
+  white,
+  black,
+  gray90,
+  gray80,
+  gray70,
+  gray60,
+  gray50,
+  gray40,
+  gray30,
+  gray20,
+  gray10,
+  primary,
+  red,
+  green,
+} from '@/lib/styles/colors.module.scss';
+
+export const Colors = {
+  white,
+  black,
+  gray90,
+  gray80,
+  gray70,
+  gray60,
+  gray50,
+  gray40,
+  gray30,
+  gray20,
+  gray10,
+  primary,
+  red,
+  green,
+};

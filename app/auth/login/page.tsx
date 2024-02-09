@@ -6,12 +6,12 @@ import {
 } from '@fluentui/react-components';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import styled from 'styled-components';
 import { AuthService } from '@/lib/services/AuthService';
 import { SupabaseAuthService } from '@/lib/services/SupabaseAuthService';
 import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/lib/types/database.types';
+import { Button } from '@/lib/components/Button';
 
 export default function Page() {
 
@@ -35,14 +35,13 @@ export default function Page() {
 }
 
 const GoogleButton = (props) => {
-  return <StyledButton {...props} $fill>
-    <Image className="mr-2" width="24" height="24" src="/googleLogo.png" alt="google logo"/>
+  return <Button {...props}>
+    <Image className="mr-2" width="22" height="22" src="/googleLogo.png" alt="google logo"/>
     {props.children}
-  </StyledButton>;
+  </Button>;
 };
 const EmailButton = (props) => {
-
-  return <StyledButton {...props}>{props.children}</StyledButton>;
+  return <Button {...props} $outlined>{props.children}</Button>;
 };
 
 const useStyles = makeStyles({
@@ -60,23 +59,3 @@ const useStyles = makeStyles({
     borderTopRightRadius: '24px',
   },
 });
-
-const StyledButton = styled.button<{ $fill?: boolean }>`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: bold;
-  height: 56px;
-  border: 2px solid white;
-  border-radius: 25px;
-  color: ${({ $fill }) => $fill ? 'black' : 'white'};
-  background-color: ${({ $fill }) => $fill ? 'white' : 'transparent'};
-  &:hover {
-    opacity: 0.85;
-  }
-  &:active {
-    opacity: 0.7;
-  }
-`;

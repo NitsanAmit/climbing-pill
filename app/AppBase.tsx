@@ -9,7 +9,7 @@ const useStyles = makeStyles({
   card: {
     width: '430px',
     minWidth: '330px',
-    '@media screen and (max-width: 431px)': { width: '100%' },
+    '@media screen and (max-width: 431px)': { width: '100%', height: '100%' },
     display: 'flex',
     flexDirection: 'column',
     ...shorthands.flex(1),
@@ -26,5 +26,5 @@ export const AppBase = ({ children }) => {
           {children}
       </Card>
     </div>
-  )
-}
+  );
+};

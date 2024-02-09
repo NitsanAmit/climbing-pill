@@ -1,11 +1,17 @@
 'use client';
 
-import { Button, Field, Input } from '@fluentui/react-components';
+import { Field } from '@fluentui/react-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createNewUser, loginUser } from '@/app/auth/login/email/actions';
+import { useState } from 'react';
+import { Input } from '@/lib/components/input/Input';
+import { Button } from '@/lib/components/Button';
+
 export const PasswordForm = ({ serverError, email, login }) => {
 
+  const [loading, setLoading] = useState(false);
   const onSubmit: SubmitHandler<{ password: string; }> = async ({ password }) => {
+    setLoading(true);
     if (login) {
       await loginUser(email, password);
     } else {
@@ -16,13 +22,11 @@ export const PasswordForm = ({ serverError, email, login }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full flex-1 p-8 m-auto flex flex-col justify-end">
-      <Field className="w-full mb-4" size="large" validationMessage={serverError?.email}>
-        <Input type="email" value={email} disabled/>
-      </Field>
-      <Field className="w-full mb-4" size="large" validationMessage={serverError?.password || (errors.password && '6 char minimum')}>
-        <Input type="password" placeholder="Password" {...register('password', passwordOptions)} />
-      </Field>
-      <Button className="w-full" shape="circular" size="large" appearance="primary" type="submit" disabled={!isValid}>
+      <Input className="mb-4" type="email" value={email} error={serverError?.email} disabled/>
+      <Input className="mb-4" type="password" placeholder="Password"
+             register={register('password', passwordOptions)}
+             error={serverError?.password || (errors.password && '6 char minimum')}/>
+      <Button className="w-full" type="submit" disabled={!isValid || loading} $outlined>
         {
           login ? 'Login' : 'Sign up'
         }

@@ -1,9 +1,11 @@
 'use client';
 
-import { Button, Field, Input } from '@fluentui/react-components';
+import { Field } from '@fluentui/react-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { Input } from '@/lib/components/input/Input';
+import { Button } from '@/lib/components/Button';
 
 export const EmailForm = ({ email, serverError }) => {
   const router = useRouter();
@@ -18,9 +20,9 @@ export const EmailForm = ({ email, serverError }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full flex-1 p-8 m-auto flex flex-col justify-end">
         <Field className="w-full mb-4" size="large" validationMessage={serverError || (errors.email && 'Missing email')}>
-          <Input type="email" placeholder="Email" {...register('email', emailOptions)} />
+          <Input type="email" placeholder="Email" register={register('email', emailOptions)} />
         </Field>
-      <Button className="w-full" shape="circular" size="large" appearance="primary" type="submit" disabled={!isValid}>Continue</Button>
+      <Button className="w-full" type="submit" disabled={!isValid} $outlined>Continue</Button>
     </form>
   );
 };

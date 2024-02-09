@@ -7,7 +7,7 @@ import { AuthService } from '@/lib/services/AuthService';
 import { SupabaseAuthService } from '@/lib/services/SupabaseAuthService';
 import { getServerActionClient } from '@/lib/supabase';
 
-export async function createUser(profileDetails: BioProfile): Promise<void> {
+export async function createUser(profileDetails: BioProfile): Promise<{error: string} | void> {
   const supabase = await getServerActionClient();
   const authService = new AuthService(new SupabaseAuthService(supabase));
   const user = await authService.getAuthenticatedUser();
@@ -25,10 +25,13 @@ export async function createUser(profileDetails: BioProfile): Promise<void> {
     created_at: new Date().toISOString(),
   };
   if (profileDetails.image) {
-    userEntry.image = await authService.uploadUserProfileImage(profileDetails.image, user.id);
+    userEntry.image = await authService.uploadUserProfileImage(profileDetails.image.get('image') as File, user.id);
   }
   const response = await supabase.from('users').insert(userEntry);
   if (response.error) {
+    if (response.error.code === DUPLICATE_KEY_ERROR && response.error.message.includes('phone_number')) {
+      return { error: 'Phone number already in use' };
+    }
     throw new Error(response.error.message);
   }
 }
@@ -37,3 +40,5 @@ export async function createUser(profileDetails: BioProfile): Promise<void> {
 export async function createClimberProfile(climberProfile: ClimberProfile): Promise<void> {
   // TODO
 }
+
+const DUPLICATE_KEY_ERROR = '23505';

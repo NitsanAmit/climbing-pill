@@ -1,0 +1,25 @@
+@import "./lib/styles/colors.module.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+    @apply text-2xl font-bold;
+    color: $primary;
+}
+
+h2 {
+    @apply text-xl font-bold;
+    color: $primary;
+}
+
+h3 {
+    @apply text-lg font-bold;
+    color: $primary;
+}

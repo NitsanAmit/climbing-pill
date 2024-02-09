@@ -10,8 +10,6 @@ export async function createNewUser(email: string, password: string) {
   const authService = new AuthService(new SupabaseAuthService(await getServerActionClient()));
   try {
     await authService.signUpWithEmail(email, password);
-    revalidatePath('/app');
-    redirect('/app/sign-up');
   } catch (error) {
     revalidatePath('/auth/login');
     if (error instanceof UserAlreadyExists) {
@@ -20,6 +18,8 @@ export async function createNewUser(email: string, password: string) {
       redirect(`/auth/login/email?email=${email}${error ? `&passwordError=${error.message}` : ''}`);
     }
   }
+  revalidatePath('/app');
+  redirect('/app/sign-up');
 }
 
 export async function loginUser(email: string, password: string) {

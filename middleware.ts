@@ -11,14 +11,15 @@ export async function middleware(req: NextRequest) {
   if (!userAuthenticated && isProtectedRoute) {
     return NextResponse.redirect(new URL('/auth/login', req.nextUrl.origin));
   }
-  if (userAuthenticated && !await authService.profileSetupComplete()) {
+  if (userAuthenticated && !await authService.profileSetupComplete() && !profileNotRequiredPaths.includes(req.nextUrl.pathname)) {
     return NextResponse.redirect(new URL('/app/sign-up', req.nextUrl.origin));
   }
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: '/((?!_next/static|_next/image|favicon.ico).*)',
+  matcher: "/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)",
 };
 
 const protectedRoutesPrefix = '/app';
+const profileNotRequiredPaths = ['/auth/login', '/app/sign-up'];
