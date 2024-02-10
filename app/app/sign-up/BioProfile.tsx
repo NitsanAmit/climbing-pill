@@ -2,9 +2,9 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
-import { Input } from '@/lib/components/input/Input';
-import { DatePicker } from '@/lib/components/date-picker/DatePicker';
-import { Button } from '@/lib/components/Button';
+import { Input } from '@/lib/components/Input';
+import { DatePicker } from '@/lib/components/DatePicker';
+import { StickyBottomButtonPage } from '@/lib/components/StickyButtonPage';
 
 export const BioProfile = ({ user, onNext }) => {
 
@@ -25,7 +25,7 @@ export const BioProfile = ({ user, onNext }) => {
     setLoading(true);
 
     const form = new FormData();
-    form.append("image", selectedProfile);
+    form.append('image', selectedProfile);
     const response = await onNext({ ...data, image: form });
     if (response?.error) {
       setLoading(false);
@@ -51,37 +51,38 @@ export const BioProfile = ({ user, onNext }) => {
   };
 
   return (
-    <div className="w-full h-full flex flex-col px-6 py-8 justify-between overflow-y-auto">
-      <div className="w-full flex flex-col">
-        <h2 className="mb-4 text-center">Let's Start with the Basics</h2>
-        <div className="w-full my-4 flex justify-center items-center">
-          <img className="cursor-pointer rounded-full w-[100px] h-[100px]" width="100" height="100"
-               src={selectedProfile ? URL.createObjectURL(selectedProfile) : '/profile-placeholder.png'}
-               alt="profile picture" onClick={pickImage} />
-        </div>
-        <div className="flex flex-col gap-y-4">
-          <Input type="email" label="Email" value={user.email} disabled/>
-          <Input type="text"
-                 label="First name"
-                 error={errors.firstName?.message?.toString()}
-                 register={register('firstName', firstNameOptions)}/>
-          <Input type="text"
-                 register={register('lastName', lastNameOptions)}
-                 label="Last Name"
-                 error={errors.lastName?.message?.toString()}/>
-          <Input type="text"
-                 register={register('phoneNumber', phoneNumberOptions)}
-                 label="Phone Number"
-                 error={errors.phoneNumber?.message?.toString()}/>
-          <DatePicker maxDate={new Date()} value={getValues('birthDate')} label="Birth Date"
-                      onSelectDate={date => setValue('birthDate', date, birthDateOptions)}/>
-        </div>
+    <StickyBottomButtonPage buttonText="Continue" onButtonClick={handleSubmit(submitHandler)}
+                            disabled={!isValid || loading}>
+      <h2 className="mt-4 mb-2 text-center">Let's Start with the Basics</h2>
+      <div className="w-full my-4 flex justify-center items-center relative rounded-full" onClick={pickImage}>
+        <img className="cursor-pointer rounded-full w-[100px] h-[100px]" width="100" height="100"
+             src={selectedProfile ? URL.createObjectURL(selectedProfile) : '/profile-placeholder.png'}
+             alt="profile picture" />
+        {
+          !selectedProfile &&
+          <div className="absolute bg-black bg-opacity-30 w-[100px] h-[100px] rounded-full flex justify-center items-center">
+            <p className="text-white">Add Image</p>
+          </div>
+        }
       </div>
-      <Button className="mt-6" type="submit" disabled={!isValid || loading} $primary
-              onClick={handleSubmit(submitHandler)}>
-        Continue
-      </Button>
-    </div>
+      <div className="flex flex-col gap-y-4">
+        <Input type="email" label="Email" value={user.email} disabled/>
+        <Input type="text"
+               label="First name"
+               error={errors.firstName?.message?.toString()}
+               register={register('firstName', firstNameOptions)}/>
+        <Input type="text"
+               register={register('lastName', lastNameOptions)}
+               label="Last Name"
+               error={errors.lastName?.message?.toString()}/>
+        <Input type="text"
+               register={register('phoneNumber', phoneNumberOptions)}
+               label="Phone Number"
+               error={errors.phoneNumber?.message?.toString()}/>
+        <DatePicker maxDate={new Date()} value={getValues('birthDate')} label="Birth Date"
+                    onSelectDate={date => setValue('birthDate', date, birthDateOptions)}/>
+      </div>
+    </StickyBottomButtonPage>
   );
 };
 

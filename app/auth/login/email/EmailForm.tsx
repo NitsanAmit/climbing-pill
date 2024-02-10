@@ -4,7 +4,7 @@ import { Field } from '@fluentui/react-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { Input } from '@/lib/components/input/Input';
+import { Input } from '@/lib/components/Input';
 import { Button } from '@/lib/components/Button';
 
 export const EmailForm = ({ email, serverError }) => {

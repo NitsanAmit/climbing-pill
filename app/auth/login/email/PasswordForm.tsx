@@ -4,7 +4,7 @@ import { Field } from '@fluentui/react-components';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createNewUser, loginUser } from '@/app/auth/login/email/actions';
 import { useState } from 'react';
-import { Input } from '@/lib/components/input/Input';
+import { Input } from '@/lib/components/Input';
 import { Button } from '@/lib/components/Button';
 
 export const PasswordForm = ({ serverError, email, login }) => {

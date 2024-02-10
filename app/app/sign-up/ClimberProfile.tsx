@@ -1,33 +1,34 @@
 'use client';
 
-import { Button, Field, Input, Select } from '@fluentui/react-components';
-import { DatePicker } from '@fluentui/react-datepicker-compat';
+import { Input } from '@/lib/components/Input';
+import { DatePicker } from '@/lib/components/DatePicker';
 import { ClimbingStyles, GymName } from '@/lib/types/climbing.types';
+import { StickyBottomButtonPage } from '@/lib/components/StickyButtonPage';
 
 export const ClimberProfile = ({ onNext }) => {
 
   return (
-    <div className="w-full h-full flex flex-col px-6 py-8 justify-between">
-      <div className="flex flex-col flex-1 gap-y-4">
-        <Field size="large" required>
-          <Select>
-            <option>Red</option>
-            <option>Green</option>
-            <option>Blue</option>
-          </Select>
-        </Field>
-        <Field size="large" >
-          <Input type="number" placeholder="Weight (kg)" min={0} />
-        </Field>
-        <Field size="large" >
-          <Input type="number" placeholder="Height (cm)" min={0} />
-        </Field>
-
+    <StickyBottomButtonPage buttonText="Continue" onButtonClick={handleSubmit(submitHandler)}
+                            disabled={!isValid || loading}>
+      <h2 className="mt-4 mb-2 text-center">Let's Start with the Basics</h2>
+      <div className="flex flex-col gap-y-4">
+        <Input type="email" label="Email" value={user.email} disabled/>
+        <Input type="text"
+               label="First name"
+               error={errors.firstName?.message?.toString()}
+               register={register('firstName', firstNameOptions)}/>
+        <Input type="text"
+               register={register('lastName', lastNameOptions)}
+               label="Last Name"
+               error={errors.lastName?.message?.toString()}/>
+        <Input type="text"
+               register={register('phoneNumber', phoneNumberOptions)}
+               label="Phone Number"
+               error={errors.phoneNumber?.message?.toString()}/>
+        <DatePicker maxDate={new Date()} value={getValues('birthDate')} label="Birth Date"
+                    onSelectDate={date => setValue('birthDate', date, birthDateOptions)}/>
       </div>
-      <Button shape="circular" size="large" appearance="primary" type="submit">
-        Continue
-      </Button>
-    </div>
+    </StickyBottomButtonPage>
   );
 };
 
