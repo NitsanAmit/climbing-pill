@@ -38,7 +38,13 @@ export async function createUser(profileDetails: BioProfile): Promise<{error: st
 
 
 export async function createClimberProfile(climberProfile: ClimberProfile): Promise<void> {
-  // TODO
+  const supabase = await getServerActionClient();
+  const authService = new AuthService(new SupabaseAuthService(supabase));
+  const user = await authService.getAuthenticatedUser();
+  if (!user) {
+    throw new Error('No user data found');
+  }
+  // TODO: Noam
 }
 
 const DUPLICATE_KEY_ERROR = '23505';
