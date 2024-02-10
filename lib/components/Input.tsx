@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Colors } from '@/lib/styles/Colors';
-import { UseFormRegister } from 'react-hook-form/dist/types/form';
+import { UseFormRegisterReturn } from 'react-hook-form/dist/types/form';
 
-export const Input: React.FC<{ label?: string; hint?: string; error?: string; register?: UseFormRegister<any> }> = (props) => {
+export const Input: React.FC<{ label?: string; hint?: string; error?: string; register?: UseFormRegisterReturn<any> }> = (props) => {
   const { label, hint, error, register = {}, ...rest } = props;
 
   return (

@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 import { Colors } from '@/lib/styles/Colors';
 import { Select as FluentSelect } from '@fluentui/react-select';
+import { UseFormRegisterReturn } from 'react-hook-form/dist/types/form';
+import { PropsWithChildren } from 'react';
 
-export const Select = ({ label, ...props }) => {
+export const Select: React.FC<PropsWithChildren<SelectProps>> = ({ label, register, ...props }) => {
   return (
     <div>
       {
@@ -12,6 +14,11 @@ export const Select = ({ label, ...props }) => {
       <StyledSelect {...props} />
     </div>
   );
+};
+
+type SelectProps = {
+  label?: string;
+  register: UseFormRegisterReturn<any>;
 };
 
 // styles that can't be applied through the style prop
