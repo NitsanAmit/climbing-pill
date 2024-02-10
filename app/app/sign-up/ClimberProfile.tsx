@@ -1,32 +1,45 @@
 'use client';
 
 import { Input } from '@/lib/components/Input';
-import { DatePicker } from '@/lib/components/DatePicker';
-import { ClimbingStyles, GymName } from '@/lib/types/climbing.types';
+import { ClimbingStyle, GymName } from '@/lib/types/climbing.types';
 import { StickyBottomButtonPage } from '@/lib/components/StickyButtonPage';
+import { Select } from '@/lib/components/Select';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { BioProfile } from '@/app/app/sign-up/BioProfile';
 
 export const ClimberProfile = ({ onNext }) => {
+
+  const [loading, setLoading] = useState(false);
+  const {
+    getValues,
+    setValue,
+    setError,
+    register,
+    handleSubmit,
+    formState,
+  } = useForm<BioProfile>({ mode: 'all' });
+  const { errors, isValid } = formState;
+
+  const submitHandler = async (data) => {
+    setLoading(true);
+    const response = await onNext(data);
+    if (response?.error) {
+      setLoading(false);
+      setError('phoneNumber', { message: response.error });
+    }
+  };
 
   return (
     <StickyBottomButtonPage buttonText="Continue" onButtonClick={handleSubmit(submitHandler)}
                             disabled={!isValid || loading}>
-      <h2 className="mt-4 mb-2 text-center">Let's Start with the Basics</h2>
+      <h2 className="mt-4 mb-2 text-center">{"Let's Start with the Basics"}</h2>
       <div className="flex flex-col gap-y-4">
-        <Input type="email" label="Email" value={user.email} disabled/>
-        <Input type="text"
-               label="First name"
-               error={errors.firstName?.message?.toString()}
-               register={register('firstName', firstNameOptions)}/>
-        <Input type="text"
-               register={register('lastName', lastNameOptions)}
-               label="Last Name"
-               error={errors.lastName?.message?.toString()}/>
-        <Input type="text"
-               register={register('phoneNumber', phoneNumberOptions)}
-               label="Phone Number"
-               error={errors.phoneNumber?.message?.toString()}/>
-        <DatePicker maxDate={new Date()} value={getValues('birthDate')} label="Birth Date"
-                    onSelectDate={date => setValue('birthDate', date, birthDateOptions)}/>
+        <Select label="Main Gym" options={mainGymNameOptions} register={register('mainGymName')} />
+        <Input label="Started Climbing Year" type="number" options={startedClimbingYearOptions} register={register('startedClimbingYear')} />
+        <Select label="Climbing Style" options={climbingStyleOptions} register={register('climbingStyle')} />
+        <Input label="Weight" type="number" register={register('weight')} />
+        <Input label="Height" type="number" register={register('height')} />
       </div>
     </StickyBottomButtonPage>
   );
@@ -37,7 +50,7 @@ export const ClimberProfile = ({ onNext }) => {
 export type ClimberProfile = {
   mainGymName: GymName;
   startedClimbingYear: string;
-  climbingStyle: ClimbingStyles;
+  climbingStyle: ClimbingStyle;
   weight: number;
   height: number;
 }

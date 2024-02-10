@@ -53,7 +53,7 @@ export const BioProfile = ({ user, onNext }) => {
   return (
     <StickyBottomButtonPage buttonText="Continue" onButtonClick={handleSubmit(submitHandler)}
                             disabled={!isValid || loading}>
-      <h2 className="mt-4 mb-2 text-center">Let's Start with the Basics</h2>
+      <h2 className="mt-4 mb-2 text-center">{"Let's Start with the Basics"}</h2>
       <div className="w-full my-4 flex justify-center items-center relative rounded-full" onClick={pickImage}>
         <img className="cursor-pointer rounded-full w-[100px] h-[100px]" width="100" height="100"
              src={selectedProfile ? URL.createObjectURL(selectedProfile) : '/profile-placeholder.png'}
