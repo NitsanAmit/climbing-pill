@@ -4,7 +4,7 @@ import UserAlreadyExistsError from '@/lib/services/UserAlreadyExistsError';
 import { Database } from '@/lib/types/database.types';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { User } from '@/lib/types/users';
-import { getUserProfile, UserProfile } from '@/lib/repositories/User';
+import { getUserProfile, UserProfile } from '@/app/api/repositories/User';
 
 export async function login(client: SupabaseClient<Database>, email: string, password: string): Promise<void> {
   const { data, error } = await client.auth.signInWithPassword({ email, password });
@@ -58,7 +58,7 @@ export async function getProfile(client: SupabaseClient<Database>): Promise<User
     if (!user) {
       throw new Error('No authenticated user');
     }
-    const profile = await getUserProfile(user.id);
+    const profile = await getUserProfile(client, user.id);
     if (!profile) {
       return null;
     }

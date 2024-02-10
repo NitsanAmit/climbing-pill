@@ -3,8 +3,8 @@ import { redirect } from 'next/navigation';
 import { BioProfile } from '@/app/app/sign-up/BioProfile';
 import { createUser, createClimberProfile } from '@/app/app/sign-up/actions';
 import { ClimberProfile } from '@/app/app/sign-up/ClimberProfile';
-import { getAuthenticatedUser, profileSetupComplete } from '@/lib/services/SupabaseAuthService';
-import { getServerComponentClient } from '@/lib/supabase';
+import { getAuthenticatedUser, profileSetupComplete } from '@/app/api/SupabaseAuthService';
+import { getServerComponentClient } from '@/app/api/supabase';
 
 export default async function Page() {
   const supabase = await getServerComponentClient();

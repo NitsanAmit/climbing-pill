@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { UserProfile } from '@/lib/repositories/User';
-import { getRouteHandlerClient } from '@/lib/supabase';
+import { UserProfile } from '@/app/api/repositories/User';
+import { getRouteHandlerClient } from '@/app/api/supabase';
 
 export async function GET(request: Request, { params }: { params: { userId: string } }): Promise<NextResponse<UserProfile | { error: string }>> {
   const id = params.userId;

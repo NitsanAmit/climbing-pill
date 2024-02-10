@@ -1,10 +1,11 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { isUserAuthenticated, profileSetupComplete } from '@/lib/services/SupabaseAuthService';
-import { getMiddlewareClient } from '@/lib/supabase';
+import { isUserAuthenticated, profileSetupComplete } from '@/app/api/SupabaseAuthService';
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs';
 
 export async function middleware(req: NextRequest) {
-  const supabase = await getMiddlewareClient(req);
+  const res = NextResponse.next();
+  const supabase = createMiddlewareClient({ req, res });
   const userAuthenticated = await isUserAuthenticated(supabase);
   const isProtectedRoute = req.nextUrl.pathname.startsWith(protectedRoutesPrefix);
   if (!userAuthenticated && isProtectedRoute) {

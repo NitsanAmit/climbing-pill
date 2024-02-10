@@ -3,13 +3,14 @@ import { Colors } from '@/lib/styles/Colors';
 import { Select as FluentSelect } from '@fluentui/react-select';
 import { UseFormRegisterReturn } from 'react-hook-form/dist/types/form';
 import { PropsWithChildren } from 'react';
+import { Label } from '@/lib/components/Label';
 
 export const Select: React.FC<PropsWithChildren<SelectProps>> = ({ label, register, ...props }) => {
   return (
     <div>
       {
         label &&
-        <Label>{label}</Label>
+        <StyledLabel>{label}</StyledLabel>
       }
       <StyledSelect {...props} />
     </div>
@@ -66,8 +67,6 @@ const StyledSelect = styled(FluentSelect)`
             }
           }
   `,
-  Label = styled.div`
-    font-size: 14px;
-    color: ${Colors.gray90};
-    margin: 0 12px 2px;
+  StyledLabel = styled(Label)`
+    margin: 0 8px 2px;
   `;

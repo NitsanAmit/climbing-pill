@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Colors } from '@/lib/styles/Colors';
 import { UseFormRegisterReturn } from 'react-hook-form/dist/types/form';
+import { Label } from '@/lib/components/Label';
 
 export const Input: React.FC<{ label?: string; hint?: string; error?: string; register?: UseFormRegisterReturn<any> }> = (props) => {
   const { label, hint, error, register = {}, ...rest } = props;
@@ -9,7 +10,7 @@ export const Input: React.FC<{ label?: string; hint?: string; error?: string; re
     <div>
       {
         label &&
-        <Label>{label}</Label>
+        <StyledLabel>{label}</StyledLabel>
       }
       <StyledInput {...rest} {...register} $error={!!error} />
       {
@@ -52,9 +53,7 @@ const StyledInput = styled.input<{ $error?: boolean }>`
             transition: background-color 0s 600000s, color 0s 600000s !important;
           }
   `,
-  Label = styled.div`
-    font-size: 14px;
-    color: ${Colors.gray90};
+  StyledLabel = styled(Label)`
     margin: 0 12px 2px;
   `,
   Hint = styled.div<{ $error: boolean }>`

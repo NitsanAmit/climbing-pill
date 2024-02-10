@@ -1,6 +1,6 @@
 import { EmailForm } from '@/app/auth/login/email/EmailForm';
 import { PasswordForm } from '@/app/auth/login/email/PasswordForm';
-import { getServerComponentClient } from '@/lib/supabase';
+import { getServerComponentClient } from '@/app/api/supabase';
 
 export default async function Page({ searchParams }) {
   const supabase = await getServerComponentClient();

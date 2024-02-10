@@ -1,7 +1,7 @@
 'use server';
 
 import { Tables } from '@/lib/types/database.types';
-import { getServerActionClient } from '@/lib/supabase';
+import { getServerActionClient } from '@/app/api/supabase';
 
 export type ClimberProfile = Tables<'climber_profiles'>;
 

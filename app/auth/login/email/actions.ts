@@ -1,8 +1,8 @@
 'use server';
 
 import UserAlreadyExistsError from '@/lib/services/UserAlreadyExistsError';
-import { login, signUpWithEmail } from '@/lib/services/SupabaseAuthService';
-import { getServerActionClient } from '@/lib/supabase';
+import { login, signUpWithEmail } from '@/app/api/SupabaseAuthService';
+import { getServerActionClient } from '@/app/api/supabase';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 

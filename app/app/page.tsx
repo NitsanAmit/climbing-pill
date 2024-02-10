@@ -1,6 +1,6 @@
 import { Dashboard } from '@/app/Dashboard';
-import { getServerComponentClient } from '@/lib/supabase';
-import { getAuthenticatedUser, getProfile } from '@/lib/services/SupabaseAuthService';
+import { getServerComponentClient } from '@/app/api/supabase';
+import { getAuthenticatedUser, getProfile } from '@/app/api/SupabaseAuthService';
 
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';

@@ -6,7 +6,7 @@ import {
 } from '@fluentui/react-components';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { signUpWithGoogle } from '@/lib/services/SupabaseAuthService';
+import { signUpWithGoogle } from '@/app/api/SupabaseAuthService';
 import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/lib/types/database.types';

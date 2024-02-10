@@ -3,8 +3,8 @@
 import { TablesInsert } from '@/lib/types/database.types';
 import { BioProfile } from './BioProfile';
 import { ClimberProfile } from './ClimberProfile';
-import { getAuthenticatedUser, uploadUserProfileImage } from '@/lib/services/SupabaseAuthService';
-import { getServerActionClient } from '@/lib/supabase';
+import { getAuthenticatedUser, uploadUserProfileImage } from '@/app/api/SupabaseAuthService';
+import { getServerActionClient } from '@/app/api/supabase';
 
 export async function createUser(profileDetails: BioProfile): Promise<{error: string} | void> {
   const supabase = await getServerActionClient();
