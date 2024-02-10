@@ -3,14 +3,12 @@
 import { TablesInsert } from '@/lib/types/database.types';
 import { BioProfile } from './BioProfile';
 import { ClimberProfile } from './ClimberProfile';
-import { AuthService } from '@/lib/services/AuthService';
-import { SupabaseAuthService } from '@/lib/services/SupabaseAuthService';
+import { getAuthenticatedUser, uploadUserProfileImage } from '@/lib/services/SupabaseAuthService';
 import { getServerActionClient } from '@/lib/supabase';
 
 export async function createUser(profileDetails: BioProfile): Promise<{error: string} | void> {
   const supabase = await getServerActionClient();
-  const authService = new AuthService(new SupabaseAuthService(supabase));
-  const user = await authService.getAuthenticatedUser();
+  const user = await getAuthenticatedUser(supabase);
   if (!user) {
     throw new Error('No user data found');
   }
@@ -25,7 +23,7 @@ export async function createUser(profileDetails: BioProfile): Promise<{error: st
     created_at: new Date().toISOString(),
   };
   if (profileDetails.image) {
-    userEntry.image = await authService.uploadUserProfileImage(profileDetails.image.get('image') as File, user.id);
+    userEntry.image = await uploadUserProfileImage(supabase, profileDetails.image.get('image') as File, user.id);
   }
   const response = await supabase.from('users').insert(userEntry);
   if (response.error) {
@@ -39,8 +37,7 @@ export async function createUser(profileDetails: BioProfile): Promise<{error: st
 
 export async function createClimberProfile(climberProfile: ClimberProfile): Promise<void> {
   const supabase = await getServerActionClient();
-  const authService = new AuthService(new SupabaseAuthService(supabase));
-  const user = await authService.getAuthenticatedUser();
+  const user = await getAuthenticatedUser(supabase);
   if (!user) {
     throw new Error('No user data found');
   }

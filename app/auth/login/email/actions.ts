@@ -1,18 +1,17 @@
 'use server';
 
-import { AuthService, UserAlreadyExists } from '@/lib/services/AuthService';
-import { SupabaseAuthService } from '@/lib/services/SupabaseAuthService';
+import UserAlreadyExistsError from '@/lib/services/UserAlreadyExistsError';
+import { login, signUpWithEmail } from '@/lib/services/SupabaseAuthService';
 import { getServerActionClient } from '@/lib/supabase';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 export async function createNewUser(email: string, password: string) {
-  const authService = new AuthService(new SupabaseAuthService(await getServerActionClient()));
   try {
-    await authService.signUpWithEmail(email, password);
+    await signUpWithEmail(await getServerActionClient(), email, password);
   } catch (error) {
     revalidatePath('/auth/login');
-    if (error instanceof UserAlreadyExists) {
+    if (error instanceof UserAlreadyExistsError) {
       redirect(`/auth/login/email?email=${email}&emailError=${encodeURIComponent('User exists, please sign in')}&login=true`);
     } else {
       redirect(`/auth/login/email?email=${email}${error ? `&passwordError=${error.message}` : ''}`);
@@ -23,9 +22,8 @@ export async function createNewUser(email: string, password: string) {
 }
 
 export async function loginUser(email: string, password: string) {
-  const authService = new AuthService(new SupabaseAuthService(await getServerActionClient()));
   try {
-    await authService.login(email, password);
+    await login(await getServerActionClient(), email, password);
   } catch (error) {
     revalidatePath('/auth/login');
     redirect(`/auth/login/email?email=${email}&passwordError=${error.message}`);

@@ -6,8 +6,7 @@ import {
 } from '@fluentui/react-components';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { AuthService } from '@/lib/services/AuthService';
-import { SupabaseAuthService } from '@/lib/services/SupabaseAuthService';
+import { signUpWithGoogle } from '@/lib/services/SupabaseAuthService';
 import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Database } from '@/lib/types/database.types';
@@ -18,10 +17,9 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
   const styles = useStyles();
   const router = useRouter();
-  const authService = new AuthService(new SupabaseAuthService(createClientComponentClient<Database>()));
   const googleLogin = async () => {
     setLoading(true);
-    await authService.signUpWithGoogle();
+    await signUpWithGoogle(createClientComponentClient<Database>());
     router.refresh();
   };
   const emailLogin = () => router.push('/auth/login/email');

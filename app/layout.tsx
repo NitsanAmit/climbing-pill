@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.scss';
-import ThemeProvider from './theme-provider';
+import ThemeProvider from './ThemeProvider';
 import { AppBase } from '@/app/AppBase';
 
 export const metadata: Metadata = {

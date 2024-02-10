@@ -1,3 +1,5 @@
+'use server';
+
 import { Tables } from '@/lib/types/database.types';
 import { getServerActionClient } from '@/lib/supabase';
 

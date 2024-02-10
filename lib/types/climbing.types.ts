@@ -66,9 +66,9 @@ export const GymNames = {
 export type GymName = typeof GymNames[keyof typeof GymNames];
 
 export const ClimbingStyles = {
-  BOULDER: 'BOULDER',
-  LEAD: 'LEAD',
-  BOTH: 'BOTH',
+  BOULDER: 'Boulder',
+  LEAD: 'Lead',
+  BOTH: 'Both',
 } as const;
 
 export type ClimbingStyle = typeof ClimbingStyles[keyof typeof ClimbingStyles];
